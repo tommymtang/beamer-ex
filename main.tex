@@ -1,0 +1,287 @@
+\documentclass[10 pt]{beamer}
+
+\usepackage{graphicx}
+
+\usepackage{bm}
+\usepackage{mathrsfs}
+\usepackage{amsmath, amssymb}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
+\usepackage{palatino}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancybox}
+\usepackage{algorithm}
+\usepackage{amsthm}
+\usepackage{subcaption}
+%\usepackage{algorithmic}
+\usepackage{algpseudocode}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\fontfamily{ppl}\selectfont 
+
+\setbeamertemplate{footline}[frame number]
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\Z}{{\mathbb Z}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\E}{{\mathbb E}}
+\newcommand{\Cov}{\text{Cov }}
+\newcommand{\Cor}{\text{Cor }}
+\newcommand{\Var}{\text{Var }}
+
+\mode<presentation>
+{
+  \usetheme{Berkeley}      % or try Darmstadt, Madrid, Warsaw, ...
+  \usecolortheme{spruce} % or try albatross, beaver, crane, ...
+  \usefonttheme{serif}  % or try serif, structurebold, ...
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+} 
+
+\title[]{Characterizing Identifiability of Models with Spatially Varying Unobserved Confounder}
+\subtitle{\vspace{2mm} Updatesa
+}
+
+
+\author{Tommy Tang}
+
+\institute[UIUC] % (optional)
+{
+  University of Illinois, Urbana Champaign
+}
+
+
+\date{}
+
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+\begin{document}
+
+\frame{\titlepage}
+\section{Introduction}
+
+\begin{frame}{Current tasks}
+Finishing proofs regarding $k$-distinguishability\bigskip
+
+Classifying Matern covariance as $k$-distinguishable 
+\bigskip
+
+Extending results to linear model of coregionalization
+\bigskip
+
+Simulations
+\end{frame}
+\section{Lucky mistake}
+\begin{frame}{Proof Error}
+Subtle error claiming that $f(x_i) = g(x_i)$ at $k$ points $\{x_i\}$ implies $f'(x_i)=g'(x_i)$ at those same points \bigskip
+
+Used in proofs of identification for exponential, Gaussian covariance functions
+\end{frame}
+
+
+\begin{frame}{General proposition for generalized polynomials}
+
+Let $f:\R^+\to \R^+$ be any 1-1 function, and consider the family of functions
+\[\mathcal{F} = \left\{\sum_{i=1}^k a_i f(x)^{d_i} : a_i, d_i \ge 0 \right\}.\]
+
+Then $\mathcal{F}$ is scaled $2k$-distinguishable with respect to $(\R^+)^k$.\bigskip
+
+Consider: the Gaussian or exponential covariance functions can be rewritten as:
+
+\[\rho(w) = \sigma f(x)^{1/\phi}\] 
+
+where $f(x) = e^{-w}$.
+
+\end{frame}
+
+\begin{frame}{$k$-distinguishable Families}
+Call a family $\mathcal{F}$ of real-valued functions on $S$ $k$-distinguishable with respect to $R\subset S^{k}$, if $\forall (z_1,...,z_k) \in R$, and any pair of functions $f_1, f_2 \in \mathcal{F}$:
+\[f_1(z_i) = f_2(z_i), \; \forall i\in\{1,...,k\} \iff f_1 = f_2 \text{ identically }.\]
+
+Call a family $\mathcal{F}$ $k$-distinguishable with scaling with respect to some $R \subset S^k$ if  $\forall f_1, f_2 \in \mathcal{F}$, the existence of some $\alpha > 0$ and $(z_1,...,z_k)\in R$:
+
+\[f_1(z_i) = \alpha f_2(z_i), \forall i\in \{1,...,k\}, \]
+
+implies $f_1=f_2$ identically.
+
+We are mostly interested in when $S^k \backslash R$ has null measure.
+
+\end{frame}
+
+
+
+\begin{frame}{Component specification }
+The joint distributions of $U, Z$ is given by
+
+\[\begin{pmatrix}U \\ Z\end{pmatrix} \sim \mathcal{N} \left(\begin{pmatrix}\mathbf{0} \\ \mathbf{0} \end{pmatrix}, \begin{pmatrix}\Sigma_U & \Sigma_{C} \\ \Sigma_{C} & \Sigma_{Z}\end{pmatrix} \right).\]
+
+Under a separable covariance structure, we assume that
+
+\[\Sigma_U = \sigma_U \Phi_U(\phi_U), \qquad\sigma_U \in \R, \phi_U \in \R^{k_U}, \Phi_U\in M_n(\R)\]
+\[\Sigma_{C} = \sigma_{C} \Phi_{C}(\phi_{C}), \qquad\sigma_C \in \R, \phi_{C} \in \R^{k_{C}},\Phi_C\in M_n(\R)\]
+\[\Sigma_Z = \sigma_Z \Phi_Z(\phi_Z), \qquad\sigma_Z \in \R, \phi_Z \in \R^{k_Z},\Phi_Z\in M_n(\R)\]
+where the component covariance matrices have entries:
+
+\[(\Phi_U)_{ij} = \rho_U(\phi_U,W_{ij}), \]
+\[(\Phi_C)_{ij} = \rho_{C}(\phi_C, W_{ij}), \]
+\[(\Phi_Z)_{ij} = \rho_{Z}(\phi_Z, W_{ij}), \]
+
+and the distance matrix $W$ is considered known.
+
+\end{frame}
+
+\begin{frame}{Identification task}
+Observe
+\begin{align}
+\Var Y|Z &= \Sigma_U - \Sigma_{C}\Sigma_Z^{-1} \Sigma_C + \epsilon^{-1} I_n \nonumber\\
+\Var Z &= \Sigma_Z \nonumber\\
+\E(YZ^T) \E(ZZ^T)^{-1} &= \beta_Z I_n + \Sigma_C \Sigma_Z^{-1} \nonumber \\
+\end{align}
+in order to identify the parameters:
+
+\[\sigma_U, \sigma_Z, \sigma_C, \phi_u, \phi_z, \phi_c, \epsilon, \beta_Z.\]
+\end{frame}
+
+
+
+
+\begin{frame}{Special Cases (Gaussian and exponential)}
+
+If $\rho_Z, \rho_C$ are either both Gaussian or both exponential, then the parameters $\beta_Z, \sigma_C, \phi_C$ are identifiable so long as there are four nonzero entries of $W$ and we assume $\Sigma_C = \Sigma_Z$. \\
+
+\end{frame}
+
+\begin{frame}{Special Cases (Linear sum families)}
+Without restriction on $\rho_Z$, as long as $\Sigma_Z$ is identified and we assume $\Sigma_C = \Sigma_Z$, we may almost always identify covariance functions that parametrizable as linear sums.\bigskip
+
+If $\rho_C$ can be written in the form \[\rho(\phi, w) = \sum_{i=1}^k \phi_i g_i(w)\] for any arbitrary preset $\{g_1,...,g_k\}$, then $\beta_Z, \sigma_C, \phi_C$ can be identified if there exist $k+1$ locations $(i_1,j_1),...,(i_{k+1},j_{k+1})$ with corresponding entries of $W$ and $\Sigma_Z$ (denoted $z_{ij}$) such that:
+
+\[\begin{pmatrix}
+z_{i_1,j_1} & g_1(w_{i_1,j_1}) & g_2(w_{i_1,j_1}) & \cdots & g_k(w_{i_1,j_1}) \\
+z_{i_2,j_2} & g_1(w_{i_2,j_2}) & g_2(w_{i_2,j_2}) & \cdots & g_k(w_{i_2,j_2}) \\
+\vdots & \vdots & \ddots & \vdots \\
+z_{i_{k+1},j_{k+1}} & g_1(w_{i_{k+1},j_{k+1}}) & g_2(w_{i_{k+1},j_{k+1}}) & \cdots & g_k(w_{i_{k+1},j_{k+1}})
+\end{pmatrix}\] is invertible. In particular we have identifiability if $\rho_C$ is spherical.
+\end{frame}
+
+\begin{frame}{Identification of $\sigma_\epsilon, \sigma_U, \phi_U$}
+
+Assuming all other parameters are identified, we may identify the remaining parameters if $\rho_U$ is scaled $k$-distinguishable with respect to $R$ and $W$ contains at least $k$ distinct points of $R$.
+
+\end{frame}
+
+\section{Linear model of coregionalization}
+
+\begin{frame}{Linear model of coregionalization}
+Another method of guaranteeing positive definiteness. \bigskip
+
+We model 
+
+\[Z \sim a_1 S_1 + a_2S_2\]
+
+\[U \sim b_1 S_1 + b_2S_2\]
+
+where $S_1, S_2$ are independent spatial processes with covariances $\Sigma_1, \Sigma_2$ constructed out of covariance functions $\rho_1, \rho_2$. As before, we assume a fixed, known distance matrix $W$, with no multiplier. 
+\end{frame}
+
+\begin{frame}
+We obtain the following expressions for observed values:
+\begin{align*}
+\Var Y|Z 
+&= (b_1^2\Sigma_1+b_2^2\Sigma_2)+\epsilon^{-1} I_n \\ &+\left(\frac{1}{b_1^2}\Sigma_1^{-1} + \frac{a_2^2}{a^2_1b^2_1} \Sigma^{-1}_1\Sigma_2\Sigma^{-1}_1 \right)^{-1}\\ &+  \left(\frac{1}{b_2^2}\Sigma_2^{-1} +  \frac{a_1^2}{a^2_2b^2_2} \Sigma^{-1}_2\Sigma_1\Sigma^{-1}_2 \right)^{-1}\\ &+ 2\left( \frac{a_1}{a_2b_1b_2}\Sigma^{-1}_2 + \frac{a_2}{a_1b_1b_2}\Sigma^{-1}_1\right)^{-1}, \\
+\Var Z &= a_1^2 \Sigma_1 + a_2^2 \Sigma_2, \\
+\E(YZ^T)\E(ZZ^T)^{-1} 
+&= (\beta_Z+b_1+b_2)I_n - \frac{b_1}{a_1}\left(\frac{a_1^2}{a_2^2} \Sigma_1\Sigma^{-1}_2 + I_n \right)^{-1} \\ &-\frac{b_2}{a_2}\left(\frac{a_2^2}{a_1^2} \Sigma_2\Sigma^{-1}_1 + I_n \right)^{-1}
+.
+\end{align*}
+\end{frame}
+
+\begin{frame}{Variance of treatment}
+Is it possible to have distinct parameters that give the same variance?
+
+\[a_1^2\Sigma_1 + a_2^2\Sigma_2 = \Var Z = a'^2_1\Sigma'_1 + a'^2_2\Sigma'_2\]
+
+From the previous proposition, we may identify $a_1, a_2$ and the parameters to construct $\Sigma_1, \Sigma_2$ if the underlying covariance functions are exponential, Gaussian, or spherical and there are at least four distinct nonzero points on $W$.
+\end{frame}
+
+\begin{frame}{Further identification}
+Let $M_1 = a_1^{-1}\left(\frac{a_1^2}{a^2_2} \Sigma_1\Sigma^{-1}_2 + I_n \right)^{-1}$, $M_2 = a_2^{-1}\left(\frac{a_2^2}{a^1_2} \Sigma_2\Sigma^{-1}_1 + I_n \right)^{-1}$, which are considered known after the previous identification.\bigskip
+Assuming that $\Sigma_2\Sigma_1^{-1}$ is not diagonal, which implies $M_1, M_2$ not diagonal, then we may identify $b_1, b_2$ from observing the off-diagonal entries of $\E(YZ^T)\E(ZZ^T)^{-1}$ if there are two pairs of locations $(i,j), (l,k)$ such that:
+
+\[\begin{pmatrix} 
+(M_1)_{ij} & (M_2)_{ij}\\
+(M_1)_{lk} & (M_2)_{lk}\
+\end{pmatrix}\] is invertible. After $b_1, b_2$ are identified, we may then identify $\beta_Z$ from the diagonal entries.
+\end{frame}
+
+\section{Simulations}
+
+\begin{frame}{Hierarchical Model for exponential, Gaussian, or spherical covariance}
+\[\beta_Z \sim \mathcal{N}(0,\sigma_\beta^2)\]
+\[\epsilon \sim \mathcal{N}(0,\sigma^2_\epsilon), \quad \sigma^2_\epsilon \sim \mathcal{N}(0, \alpha_\epsilon^2),\quad \alpha_\epsilon^2 \sim \mathcal{N}(0,1)\]
+\[\sigma_U^2 \sim \mathcal{N}(0, \alpha_U^2), \quad \phi_U \sim \mathcal{N}(0, c_U^2), c_U^2 \sim \mathcal{N}(0,1)\]
+
+\[\sigma_C^2 \sim \mathcal{N}(0, \alpha_C^2), \quad \phi_C \sim \mathcal{N}(0, c_C^2), c_C^2 \sim \mathcal{N}(0,1)\]
+
+\[\sigma_Z^2 \sim \mathcal{N}(0, \alpha_Z^2), \quad \phi_Z \sim \mathcal{N}(0, c_Z^2), c_Z^2 \sim \mathcal{N}(0,1)\]
+\[\Sigma_C = \sigma^2_C \cdot \rho_C(\phi_C,W)\]
+\[Z \sim \mathcal{N}(0, \Sigma_Z); \Sigma_Z = \sigma^2_Z \cdot \rho_Z(\phi_Z,W)\]
+\[U \sim \mathcal{N}(0, \Sigma_U); \Sigma_U = \sigma^2_U\cdot \rho_U(\phi_U,W)\] 
+
+\[Y = Z\beta_Z + U + \epsilon\]
+
+Should I be generating $U|Z$ since $Z$ and $Y$ are known?
+
+
+
+\end{frame}
+
+\section{Further}
+\begin{frame}{Next steps}
+Run Gibbs sampling 
+\bigskip
+
+Extend to Matern covariance function
+\bigskip
+
+Finish proof in discrete case
+\bigskip
+
+Consider real data
+\end{frame}
+
+\section{References}
+\begin{frame}{References}
+\tiny
+
+
+Dupont, Emiko, Simon N. Wood, and Nicole H. Augustin. "Spatial+: a novel approach to spatial confounding." Biometrics (2022).
+\bigskip
+
+Dupont, Emiko, Simon N. Wood, and Nicole H. Augustin. "Rejoinder to the discussions of “Spatial+: A novel approach
+to spatial confounding”" Biometrics (2022).
+\bigskip
+
+Hernán MA, Robins JM (2020). Causal Inference: What If. Boca Raton: Chapman \& Hall/CRC. \bigskip
+
+Gilbert, Brian, Abhirup Datta, and Elizabeth Ogburn. "Approaches to spatial confounding in geostatistics." arXiv preprint arXiv:2112.14946 (2021).
+\bigskip
+
+Schnell, Patrick M., and Georgia Papadogeorgou. "Mitigating unobserved spatial confounding when estimating the effect of supermarket access on cardiovascular disease deaths." The Annals of Applied Statistics 14.4 (2020): 2069-2095.
+
+
+\end{frame}
+
+\end{document}
+
